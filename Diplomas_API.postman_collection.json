@@ -1,0 +1,90 @@
+{
+	"info": {
+		"name": "Diplomas App API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		}
+	],
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [{"key": "Content-Type", "value": "application/json"}],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@diplomas.com\",\n  \"password\": \"password\"\n}"
+				},
+				"url": "{{base_url}}/controllers/login.php"
+			}
+		},
+		{
+			"name": "Listar Cursos",
+			"request": {
+				"method": "GET",
+				"url": "{{base_url}}/controllers/cursos.php"
+			}
+		},
+		{
+			"name": "Crear Curso",
+			"request": {
+				"method": "POST",
+				"header": [{"key": "Content-Type", "value": "application/json"}],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"Desarrollo Web con PHP\",\n  \"descripcion\": \"Curso completo de PHP 8\",\n  \"duracion\": \"40 horas\",\n  \"instructor\": \"María González\",\n  \"precio\": 299.99,\n  \"imagen\": \"curso-php.jpg\"\n}"
+				},
+				"url": "{{base_url}}/controllers/cursos.php"
+			}
+		},
+		{
+			"name": "Listar Diplomas",
+			"request": {
+				"method": "GET",
+				"url": "{{base_url}}/controllers/diplomas.php"
+			}
+		},
+		{
+			"name": "Crear Diploma",
+			"request": {
+				"method": "POST",
+				"header": [{"key": "Content-Type", "value": "application/json"}],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"curso_id\": 1,\n  \"nombre_estudiante\": \"Carlos Rodríguez\",\n  \"tipo_documento\": \"CC\",\n  \"documento\": \"12345678\",\n  \"fecha_emision\": \"2024-01-15\"\n}"
+				},
+				"url": "{{base_url}}/controllers/diplomas.php"
+			}
+		},
+		{
+			"name": "Validar por Documento",
+			"request": {
+				"method": "GET",
+				"url": "{{base_url}}/controllers/validar.php?tipo_documento=CC&documento=12345678"
+			}
+		},
+		{
+			"name": "Validar por Código",
+			"request": {
+				"method": "GET",
+				"url": "{{base_url}}/controllers/validar.php?codigo=ABC123"
+			}
+		},
+		{
+			"name": "Enviar Contacto",
+			"request": {
+				"method": "POST",
+				"header": [{"key": "Content-Type", "value": "application/json"}],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"Ana López\",\n  \"email\": \"ana@example.com\",\n  \"telefono\": \"3001234567\",\n  \"mensaje\": \"Consulta sobre cursos\"\n}"
+				},
+				"url": "{{base_url}}/controllers/contacto.php"
+			}
+		}
+	]
+}

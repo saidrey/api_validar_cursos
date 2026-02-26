@@ -1,0 +1,43 @@
+Options -Indexes
+RewriteEngine On
+
+# ─────────────────────────────────────────────
+# Pasar el header Authorization a PHP (JWT)
+# Necesario en hosting compartido (Hostinger, cPanel)
+# ─────────────────────────────────────────────
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# ─────────────────────────────────────────────
+# Variables de entorno
+# Copiar este bloque en tu .htaccess real y completar con tus datos
+# ─────────────────────────────────────────────
+# SetEnv DB_HOST localhost
+# SetEnv DB_NAME tu_base_de_datos
+# SetEnv DB_USER tu_usuario
+# SetEnv DB_PASS tu_password
+#
+# SetEnv JWT_SECRET una_clave_larga_y_aleatoria_minimo_32_caracteres
+#
+# SetEnv MAIL_MODE production
+# SetEnv SMTP_HOST smtp.hostinger.com
+# SetEnv SMTP_PORT 465
+# SetEnv SMTP_USERNAME tu_email@tudominio.com
+# SetEnv SMTP_PASSWORD tu_password_smtp
+# SetEnv SMTP_FROM_EMAIL tu_email@tudominio.com
+# SetEnv SMTP_FROM_NAME "Nombre de tu app"
+# SetEnv SMTP_REPLY_TO tu_email@tudominio.com
+# SetEnv CONTACT_EMAIL contacto@tudominio.com
+
+# ─────────────────────────────────────────────
+# Bloquear acceso a archivos sensibles
+# ─────────────────────────────────────────────
+<FilesMatch "(\.env|\.htaccess|composer\.(json|lock)|.*\.sql|.*\.md|.*\.example)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

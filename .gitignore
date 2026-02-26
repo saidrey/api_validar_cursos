@@ -1,0 +1,36 @@
+# ─────────────────────────────────────────────
+# Credenciales y configuración de entorno
+# NUNCA deben ir al repositorio
+# ─────────────────────────────────────────────
+.htaccess
+.env
+
+# ─────────────────────────────────────────────
+# Dependencias de Composer
+# Se instalan con: composer install
+# ─────────────────────────────────────────────
+vendor/
+
+# ─────────────────────────────────────────────
+# Archivos de usuario y datos de producción
+# ─────────────────────────────────────────────
+uploads/
+logs/
+
+# ─────────────────────────────────────────────
+# Copia de producción descargada (solo referencia local)
+# ─────────────────────────────────────────────
+public_html/
+
+# ─────────────────────────────────────────────
+# Archivos de debug y temporales
+# ─────────────────────────────────────────────
+debug-mail.php
+.htaccess.bak
+*.log
+
+# ─────────────────────────────────────────────
+# Sistema operativo
+# ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
