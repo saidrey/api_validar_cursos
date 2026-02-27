@@ -32,6 +32,7 @@ jobs:
           port: 21
           local-dir: ./
           server-dir: /domains/api.aulavirtualcentrodecompetencia.com/public_html/
+          state-name: .ftp-deploy-sync-api
           log-level: verbose
           exclude: |
             **/.git*
