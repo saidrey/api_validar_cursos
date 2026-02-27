@@ -31,7 +31,7 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: ./
-          server-dir: /
+          server-dir: /home/u515515891/domains/api.aulavirtualcentrodecompetencia.com/public_html/
           log-level: verbose
           exclude: |
             **/.git*
