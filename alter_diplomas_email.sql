@@ -1,0 +1,1 @@
+ALTER TABLE diplomas ADD COLUMN email VARCHAR(255) NULL AFTER documento;

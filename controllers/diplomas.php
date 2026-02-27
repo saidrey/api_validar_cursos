@@ -38,6 +38,7 @@ switch($method) {
             $diploma->nombre_estudiante = $data->nombre_estudiante;
             $diploma->tipo_documento = $data->tipo_documento;
             $diploma->documento = $data->documento;
+            $diploma->email = $data->email ?? null;
             $diploma->fecha_emision = $data->fecha_emision ?? date('Y-m-d');
 
             if($diploma->crear()) {
@@ -61,6 +62,7 @@ switch($method) {
             $diploma->nombre_estudiante = $data->nombre_estudiante;
             $diploma->tipo_documento = $data->tipo_documento;
             $diploma->documento = $data->documento;
+            $diploma->email = $data->email ?? null;
             $diploma->fecha_emision = $data->fecha_emision;
             $diploma->activo = isset($data->activo) ? intval($data->activo) : 1;
 

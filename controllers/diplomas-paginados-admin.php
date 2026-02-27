@@ -27,8 +27,8 @@ if ($method === 'GET') {
 
     // Subquery para evitar conflicto WHERE cuando se combina filtro + búsqueda
     $innerQuery = "SELECT d.id, d.curso_id, d.nombre_estudiante, d.tipo_documento, d.documento,
-                          d.fecha_emision, d.codigo_verificacion, d.activo, d.fecha_creacion,
-                          c.nombre as curso_nombre
+                          d.email, d.fecha_emision, d.codigo_verificacion, d.activo, d.fecha_creacion,
+                          c.nombre as curso_nombre, c.duracion as curso_duracion
                    FROM diplomas d
                    LEFT JOIN cursos c ON d.curso_id = c.id
                    $filtroActivo";

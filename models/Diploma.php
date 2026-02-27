@@ -8,6 +8,7 @@ class Diploma {
     public $nombre_estudiante;
     public $tipo_documento;
     public $documento;
+    public $email;
     public $fecha_emision;
     public $codigo_verificacion;
     public $activo;
@@ -17,8 +18,8 @@ class Diploma {
     }
 
     public function crear() {
-        $query = "INSERT INTO {$this->table} (curso_id, nombre_estudiante, tipo_documento, documento, fecha_emision, codigo_verificacion) 
-                  VALUES (:curso_id, :nombre_estudiante, :tipo_documento, :documento, :fecha_emision, :codigo_verificacion)";
+        $query = "INSERT INTO {$this->table} (curso_id, nombre_estudiante, tipo_documento, documento, email, fecha_emision, codigo_verificacion)
+                  VALUES (:curso_id, :nombre_estudiante, :tipo_documento, :documento, :email, :fecha_emision, :codigo_verificacion)";
         $stmt = $this->conn->prepare($query);
 
         $this->codigo_verificacion = $this->generarCodigo();
@@ -27,6 +28,7 @@ class Diploma {
         $stmt->bindParam(':nombre_estudiante', $this->nombre_estudiante);
         $stmt->bindParam(':tipo_documento', $this->tipo_documento);
         $stmt->bindParam(':documento', $this->documento);
+        $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':fecha_emision', $this->fecha_emision);
         $stmt->bindParam(':codigo_verificacion', $this->codigo_verificacion);
 
@@ -84,6 +86,7 @@ class Diploma {
                   nombre_estudiante = :nombre_estudiante,
                   tipo_documento = :tipo_documento,
                   documento = :documento,
+                  email = :email,
                   fecha_emision = :fecha_emision,
                   activo = :activo
                   WHERE id = :id";
@@ -93,6 +96,7 @@ class Diploma {
         $stmt->bindParam(':nombre_estudiante', $this->nombre_estudiante);
         $stmt->bindParam(':tipo_documento', $this->tipo_documento);
         $stmt->bindParam(':documento', $this->documento);
+        $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':fecha_emision', $this->fecha_emision);
         $stmt->bindParam(':activo', $this->activo);
         $stmt->bindParam(':id', $this->id);
