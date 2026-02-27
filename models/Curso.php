@@ -15,14 +15,15 @@ class Curso {
     public $precio;
     public $imagen;
     public $activo;
+    public $preguntas;
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
     public function crear() {
-        $query = "INSERT INTO {$this->table} (nombre, descripcion, contenido_markdown, video_url_1, video_url_2, resumen, duracion, instructor, precio, imagen)
-                  VALUES (:nombre, :descripcion, :contenido_markdown, :video_url_1, :video_url_2, :resumen, :duracion, :instructor, :precio, :imagen)";
+        $query = "INSERT INTO {$this->table} (nombre, descripcion, contenido_markdown, video_url_1, video_url_2, resumen, duracion, instructor, precio, imagen, preguntas)
+                  VALUES (:nombre, :descripcion, :contenido_markdown, :video_url_1, :video_url_2, :resumen, :duracion, :instructor, :precio, :imagen, :preguntas)";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':nombre', $this->nombre);
@@ -35,6 +36,7 @@ class Curso {
         $stmt->bindParam(':instructor', $this->instructor);
         $stmt->bindParam(':precio', $this->precio);
         $stmt->bindParam(':imagen', $this->imagen);
+        $stmt->bindParam(':preguntas', $this->preguntas);
 
         return $stmt->execute();
     }
@@ -66,7 +68,8 @@ class Curso {
                   instructor = :instructor,
                   precio = :precio,
                   imagen = :imagen,
-                  activo = :activo
+                  activo = :activo,
+                  preguntas = :preguntas
                   WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
@@ -81,6 +84,7 @@ class Curso {
         $stmt->bindParam(':precio', $this->precio);
         $stmt->bindParam(':imagen', $this->imagen);
         $stmt->bindParam(':activo', $this->activo);
+        $stmt->bindParam(':preguntas', $this->preguntas);
         $stmt->bindParam(':id', $this->id);
 
         return $stmt->execute();

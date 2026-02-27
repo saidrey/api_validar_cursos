@@ -5,6 +5,7 @@ class Examen {
 
     public $id;
     public $usuario_id;
+    public $email;
     public $curso_id;
     public $nota;
     public $fecha_presentacion;
@@ -26,10 +27,11 @@ class Examen {
     }
 
     public function crear() {
-        $query = "INSERT INTO {$this->table} (usuario_id, curso_id, nota, fecha_presentacion)
-                  VALUES (:usuario_id, :curso_id, :nota, NOW())";
+        $query = "INSERT INTO {$this->table} (usuario_id, email, curso_id, nota, fecha_presentacion)
+                  VALUES (:usuario_id, :email, :curso_id, :nota, NOW())";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':usuario_id', $this->usuario_id, PDO::PARAM_INT);
+        $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':curso_id', $this->curso_id, PDO::PARAM_INT);
         $stmt->bindParam(':nota', $this->nota);
         return $stmt->execute();

@@ -25,10 +25,18 @@ switch($method) {
         if(isset($_GET['id'])) {
             $curso->id = $_GET['id'];
             $result = $curso->leerUno();
+            if ($result && isset($result['preguntas']) && $result['preguntas'] !== null) {
+                $result['preguntas'] = json_decode($result['preguntas']);
+            }
             echo json_encode($result ?: ['mensaje' => 'Curso no encontrado']);
         } else {
             $stmt = $curso->leer();
             $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($cursos as &$c) {
+                if (isset($c['preguntas']) && $c['preguntas'] !== null) {
+                    $c['preguntas'] = json_decode($c['preguntas']);
+                }
+            }
             echo json_encode($cursos);
         }
         break;
@@ -49,6 +57,9 @@ switch($method) {
             $curso->instructor = $data->instructor ?? '';
             $curso->precio = $data->precio ?? 0;
             $curso->imagen = $data->imagen ?? '';
+            $curso->preguntas = isset($data->preguntas) && $data->preguntas !== null
+                ? json_encode($data->preguntas)
+                : null;
 
             if($curso->crear()) {
                 http_response_code(201);
@@ -81,6 +92,9 @@ switch($method) {
             $curso->precio = $data->precio;
             $curso->imagen = $data->imagen;
             $curso->activo = isset($data->activo) ? intval($data->activo) : 1;
+            $curso->preguntas = isset($data->preguntas) && $data->preguntas !== null
+                ? json_encode($data->preguntas)
+                : null;
 
             if($curso->actualizar()) {
                 echo json_encode(['mensaje' => 'Curso actualizado exitosamente']);

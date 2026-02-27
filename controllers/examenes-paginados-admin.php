@@ -1,0 +1,66 @@
+<?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+include_once '../config/Database.php';
+include_once '../config/Pagination.php';
+include_once '../middleware/auth.php';
+
+$method = $_SERVER['REQUEST_METHOD'];
+
+if ($method === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+if ($method === 'GET') {
+    requireAdmin();
+
+    $database = new Database();
+    $db = $database->getConnection();
+
+    $baseQuery = "SELECT e.id, e.email, c.nombre AS curso_nombre, e.nota,
+                         CASE WHEN e.nota >= 60 THEN 'Aprobado' ELSE 'Reprobado' END AS estado,
+                         e.fecha_presentacion
+                  FROM examenes e
+                  LEFT JOIN cursos c ON e.curso_id = c.id";
+
+    $searchFields = ['e.email', 'c.nombre'];
+
+    $paginationData = Pagination::buildQuery($baseQuery, $_GET, $searchFields);
+
+    $countStmt = $db->prepare($paginationData['countQuery']);
+    foreach ($paginationData['bindParams'] as $key => $value) {
+        $countStmt->bindValue($key, $value);
+    }
+    $countStmt->execute();
+    $total = $countStmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+    $stmt = $db->prepare($paginationData['query']);
+    foreach ($paginationData['bindParams'] as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+    $stmt->bindValue(':limit', $paginationData['limit'], PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $paginationData['offset'], PDO::PARAM_INT);
+    $stmt->execute();
+
+    $examenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($examenes as &$e) {
+        $e['id']   = intval($e['id']);
+        $e['nota'] = floatval($e['nota']);
+    }
+
+    echo json_encode(Pagination::buildResponse(
+        $examenes,
+        $total,
+        $paginationData['page'],
+        $paginationData['limit']
+    ));
+
+} else {
+    http_response_code(405);
+    echo json_encode(['mensaje' => 'Método no permitido']);
+}
