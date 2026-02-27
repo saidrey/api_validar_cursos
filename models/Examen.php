@@ -15,7 +15,7 @@ class Examen {
     }
 
     public function listarPorUsuario($usuario_id) {
-        $query = "SELECT e.id, e.nota, e.fecha_presentacion, c.nombre AS curso_nombre
+        $query = "SELECT e.id, e.curso_id, e.nota, e.fecha_presentacion, c.nombre AS curso_nombre
                   FROM {$this->table} e
                   LEFT JOIN cursos c ON e.curso_id = c.id
                   WHERE e.usuario_id = :usuario_id
