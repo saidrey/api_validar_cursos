@@ -41,6 +41,9 @@ switch($method) {
         if(!empty($data->nombre)) {
             $curso->nombre = $data->nombre;
             $curso->descripcion = $data->descripcion ?? '';
+            $curso->contenido_markdown = $data->contenido_markdown ?? '';
+            $curso->video_url_1 = $data->video_url_1 ?? '';
+            $curso->video_url_2 = $data->video_url_2 ?? '';
             $curso->resumen = $data->resumen ?? '';
             $curso->duracion = $data->duracion ?? '';
             $curso->instructor = $data->instructor ?? '';
@@ -69,6 +72,9 @@ switch($method) {
             $curso->id = $data->id;
             $curso->nombre = $data->nombre;
             $curso->descripcion = $data->descripcion;
+            $curso->contenido_markdown = $data->contenido_markdown ?? '';
+            $curso->video_url_1 = $data->video_url_1 ?? '';
+            $curso->video_url_2 = $data->video_url_2 ?? '';
             $curso->resumen = $data->resumen;
             $curso->duracion = $data->duracion;
             $curso->instructor = $data->instructor;

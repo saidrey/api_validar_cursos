@@ -6,6 +6,9 @@ class Curso {
     public $id;
     public $nombre;
     public $descripcion;
+    public $contenido_markdown;
+    public $video_url_1;
+    public $video_url_2;
     public $resumen;
     public $duracion;
     public $instructor;
@@ -18,12 +21,15 @@ class Curso {
     }
 
     public function crear() {
-        $query = "INSERT INTO {$this->table} (nombre, descripcion, resumen, duracion, instructor, precio, imagen) 
-                  VALUES (:nombre, :descripcion, :resumen, :duracion, :instructor, :precio, :imagen)";
+        $query = "INSERT INTO {$this->table} (nombre, descripcion, contenido_markdown, video_url_1, video_url_2, resumen, duracion, instructor, precio, imagen)
+                  VALUES (:nombre, :descripcion, :contenido_markdown, :video_url_1, :video_url_2, :resumen, :duracion, :instructor, :precio, :imagen)";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':nombre', $this->nombre);
         $stmt->bindParam(':descripcion', $this->descripcion);
+        $stmt->bindParam(':contenido_markdown', $this->contenido_markdown);
+        $stmt->bindParam(':video_url_1', $this->video_url_1);
+        $stmt->bindParam(':video_url_2', $this->video_url_2);
         $stmt->bindParam(':resumen', $this->resumen);
         $stmt->bindParam(':duracion', $this->duracion);
         $stmt->bindParam(':instructor', $this->instructor);
@@ -52,6 +58,9 @@ class Curso {
         $query = "UPDATE {$this->table} SET
                   nombre = :nombre,
                   descripcion = :descripcion,
+                  contenido_markdown = :contenido_markdown,
+                  video_url_1 = :video_url_1,
+                  video_url_2 = :video_url_2,
                   resumen = :resumen,
                   duracion = :duracion,
                   instructor = :instructor,
@@ -63,6 +72,9 @@ class Curso {
 
         $stmt->bindParam(':nombre', $this->nombre);
         $stmt->bindParam(':descripcion', $this->descripcion);
+        $stmt->bindParam(':contenido_markdown', $this->contenido_markdown);
+        $stmt->bindParam(':video_url_1', $this->video_url_1);
+        $stmt->bindParam(':video_url_2', $this->video_url_2);
         $stmt->bindParam(':resumen', $this->resumen);
         $stmt->bindParam(':duracion', $this->duracion);
         $stmt->bindParam(':instructor', $this->instructor);

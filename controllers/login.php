@@ -27,21 +27,16 @@ if($method === 'POST') {
         $result = $usuario->login();
 
         if($result && password_verify($data->password, $result['password'])) {
-            if($result['rol'] !== 'admin') {
-                http_response_code(403);
-                echo json_encode(['mensaje' => 'No tiene acceso al sistema. Comuníquese con el administrador.']);
-            } else {
-                // Generar JWT
-                $token = JWTHandler::generateToken($result);
+            // Generar JWT para admin y usuario
+            $token = JWTHandler::generateToken($result);
 
-                unset($result['password']);
-                http_response_code(200);
-                echo json_encode([
-                    'mensaje' => 'Login exitoso',
-                    'token' => $token,
-                    'usuario' => $result
-                ]);
-            }
+            unset($result['password']);
+            http_response_code(200);
+            echo json_encode([
+                'mensaje' => 'Login exitoso',
+                'token' => $token,
+                'usuario' => $result
+            ]);
         } else {
             http_response_code(401);
             echo json_encode(['mensaje' => 'Credenciales inválidas']);
