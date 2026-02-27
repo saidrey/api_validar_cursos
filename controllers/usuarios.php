@@ -62,6 +62,10 @@ switch($method) {
             $usuario->activo = isset($data->activo) ? intval($data->activo) : 1;
 
             if($usuario->actualizar()) {
+                if (!empty($data->nueva_password) && strlen($data->nueva_password) >= 6) {
+                    $usuario->password = $data->nueva_password;
+                    $usuario->cambiarPassword();
+                }
                 echo json_encode(['mensaje' => 'Usuario actualizado exitosamente']);
             } else {
                 http_response_code(503);

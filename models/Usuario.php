@@ -56,6 +56,15 @@ class Usuario {
         return $stmt->execute();
     }
 
+    public function cambiarPassword() {
+        $query = "UPDATE {$this->table} SET password = :password WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $hashed = password_hash($this->password, PASSWORD_BCRYPT);
+        $stmt->bindParam(':password', $hashed);
+        $stmt->bindParam(':id', $this->id);
+        return $stmt->execute();
+    }
+
     public function eliminar() {
         $query = "UPDATE {$this->table} SET activo = 0 WHERE id = :id";
         $stmt = $this->conn->prepare($query);
